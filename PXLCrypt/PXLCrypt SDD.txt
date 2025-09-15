@@ -1,0 +1,131 @@
+Software Design Document (SDD)
+
+Project: PXLCrypt – Image Steganography with Password
+Author: PXL – Programming eXperience Lab
+Version: 1.0
+Date: 2025-09-15
+
+1. Introduction
+1.1 Purpose
+
+PXLCrypt is a client-side web application for secure steganography. It allows users to hide text messages inside images, encrypt them with a password, and later decode them only if the correct password is provided.
+
+1.2 Scope
+
+Works entirely in-browser using HTML5, CSS3, and Vanilla JavaScript (no frameworks).
+
+Provides a secure way to share hidden messages via images (PNG format).
+
+Designed with a retro neon aesthetic and a Matrix-style background animation.
+
+Lightweight, portable, and does not require server infrastructure.
+
+1.3 Definitions
+
+Steganography: Concealing a secret message inside another medium.
+
+XOR Encryption: A simple symmetric encryption method where the same key (password) is used to encrypt and decrypt.
+
+2. System Overview
+
+PXLCrypt runs as a single HTML page application with the following main functions:
+
+Encode: Embed an encrypted message inside an image.
+
+Decode: Extract and decrypt the hidden message from an encoded image.
+
+Security Layer: Password-based XOR encryption with input sanitization.
+
+UI/UX Layer: Neon cyberpunk design with a glitch effect and animated background.
+
+3. System Architecture
+3.1 Components
+
+Frontend UI:
+
+index.html: Contains the application structure and UI elements.
+
+style: Handles retro neon design and glitch animations.
+
+matrixCanvas: Renders falling character animation.
+
+Business Logic (JavaScript):
+
+Steganography Engine: Embeds/extracts binary message into/from image pixels.
+
+Encryption Module: XOR-based encryption/decryption with user password.
+
+Validation & Sanitization: Strips unsafe characters, limits input length, prevents overflow.
+
+Processing Canvas (#canvas):
+
+Hidden element used to manipulate image data (pixels).
+
+3.2 Data Flow
+
+Encoding
+
+User selects an image → enters message & password → message is XOR-encrypted → converted to binary → binary bits stored in LSB (least significant bit) of blue pixel channel → new PNG generated and downloaded.
+
+Decoding
+
+User uploads encoded image → system extracts binary stream from LSB → reconstructs encrypted text → decrypts using password → outputs hidden message.
+
+4. User Interface
+4.1 Layout
+
+Main Container: Centered box with inputs and buttons.
+
+Inputs:
+
+File upload (image)
+
+Secret message textarea
+
+Password field
+
+Buttons: Encode & Download, Decode Message.
+
+Output: Read-only textarea displaying decoded message.
+
+4.2 Styling
+
+Background: Animated Matrix effect.
+
+Container: Semi-transparent dark box with neon cyan glow.
+
+Fonts: Monospace with neon text-shadow.
+
+Buttons: Cyan with hover transition to magenta.
+
+5. Security Considerations
+
+Encryption: Uses XOR with password → provides lightweight obfuscation.
+
+Sanitization: Removes non-printable characters to prevent injection attacks.
+
+Message Limits: Maximum 1000 characters to avoid image overflow.
+
+Password Protection: Required at both encode and decode stages.
+
+Local Execution: All processing is done client-side; no server storage.
+
+⚠️ Limitation: XOR encryption is not cryptographically strong. For stronger protection, AES-256 (via Web Crypto API) is recommended in future versions.
+
+6. Future Enhancements
+
+Replace XOR with AES-256 encryption.
+
+Add drag-and-drop support for images.
+
+Provide QR code export for decoded text.
+
+Multi-language support (UTF-8 full range instead of ASCII).
+
+Progressive Web App (PWA) version for offline use.
+
+Support for larger files via chunking.
+
+7. Conclusion
+
+PXLCrypt provides a lightweight, secure, and visually engaging way to hide messages in images. Its combination of steganography + password-based encryption ensures that only users with the correct password can reveal the hidden content. Future upgrades will focus on enhancing encryption strength and expanding usability.
