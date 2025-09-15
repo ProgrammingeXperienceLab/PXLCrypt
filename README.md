@@ -1,4 +1,4 @@
-# PXLCrypt 🌌🔒
+# PXLCrypt
 
 **PXLCrypt** is a lightweight, browser-based **image steganography tool** that lets you hide secret messages inside images using a password.  
 Fully client-side, no server required, with a stylish **Cyberpunk Neon** interface.
